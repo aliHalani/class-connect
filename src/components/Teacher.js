@@ -17,7 +17,7 @@ function createCourseCards(courseData, rowSize) {
 return coursecards;
 }
 
-export default function Dashboard() {
+export default function Teacher() {
   const courses = createCourseCards(Object.values(courseData), 3)
     return (
           <Container maxWidth="lg">

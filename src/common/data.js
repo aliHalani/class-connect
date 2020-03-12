@@ -2,37 +2,37 @@ let courseData = {
   14542: {
     courseName: "Intro to Architecture",
     numOfStudents: 31,
-    classAverage: 73,
+    classAverage: 83,
     courseLink: "https://www.apple.com",
     description: "This is a sample description for a course",
     id: 14542
   },
   38457: {
-    courseName: "Intro to Architecture",
+    courseName: "Intro to Computer Science",
     numOfStudents: 31,
-    classAverage: 73,
+    classAverage: 87,
     courseLink: "https://www.apple.com",
     description: "This is a sample description for a course",
     id: 38457
   },
   43852: {
-    courseName: "Intro to Architecture",
+    courseName: "Advanced Business Analytics",
     numOfStudents: 31,
-    classAverage: 73,
+    classAverage: 62,
     courseLink: "https://www.apple.com",
     description: "This is a sample description for a course",
     id: 43852
   },
   57329: {
-    courseName: "Intro to Architecture",
+    courseName: "General Life 101",
     numOfStudents: 31,
-    classAverage: 73,
+    classAverage: 45,
     courseLink: "https://www.apple.com",
     description: "This is a sample description for a course",
     id: 57329
   },
   91847: {
-    courseName: "Intro to Architecture",
+    courseName: "Technical Design",
     numOfStudents: 31,
     classAverage: 73,
     courseLink: "https://www.apple.com",
@@ -66,17 +66,20 @@ let studentData = [
   {
     "last": "Lockman",
     "id": 0,
-    "first": "Delphine"
+    "first": "Delphine",
+    "average": 83
   },
   {
     "last": "Smith",
     "id": 1,
-    "first": "Dale"
+    "first": "Dale",
+    "average": 73
   },
   {
     "last": "Steuber",
     "id": 2,
-    "first": "Abigayle"
+    "first": "Abigayle",
+    "average": 78
   },
   {
     "last": "Monahan",
@@ -258,17 +261,32 @@ let studentData = [
 let assignmentData = {
   0: {
     "title": "Insect Assignment",
-    "grade": 84,
+    "grade": 23,
+    "attachments": [{
+      "filename": "insect.jpg",
+      "src": "../images/"
+    }],
+    "comments": "You did a good job, but I hate insects. Please ask for more clarification next time.",
+    "date": "10/31/2019",
     "id": 0
   },
   1: {
     "title": "Bake-a-food Project",
     "grade": 73,
+    "attachments": [{
+      "filename": "cookies.jpg",
+      "src": "../images/"
+    }],
+    "comments": "Is this vegan?",
+    "date": "11/11/2019",
     "id": 1
   },
   2: {
     "title": "English Literature Essay",
     "grade": 93,
+    "attachments": [],
+    "comments": "Wow. Your writing is at a level well beyond your years. Keep it up!",
+    "date": "12/04/2019",
     "id": 2
   }
 }

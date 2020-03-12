@@ -16,7 +16,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import { ThemeProvider } from '@material-ui/core/styles';
 import TestRoute from './TestRoute'
-import Dashboard from './Dashboard'
 import { Switch, Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import Routes from "./Routes"
 

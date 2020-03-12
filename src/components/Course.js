@@ -14,6 +14,8 @@ import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
 import CreatePost from './CreatePost';
 import {useHistory} from 'react-router-dom'
+import Divider from '@material-ui/core/Divider';
+
 
 const drawerWidth = 260;
 
@@ -48,7 +50,8 @@ const useStyles = makeStyles(theme => ({
 export default function Course() {
     const [postInfo, setPosts] = React.useState(coursePosts);
 
-    let {id} = useParams();
+    let {courseid} = useParams();
+    let id = courseid;
     const classes = useStyles();
     // return (
     //     <h2>Course ID is {id}</h2>
@@ -61,6 +64,10 @@ export default function Course() {
     let courseInfo = courseData[id];
 
     let history = useHistory();
+
+    postInfo.sort((post1, post2) => {
+      return (new Date(post2.date) - new Date(post1.date))
+    });
 
     return (
         <div className={classes.root}>
@@ -76,7 +83,8 @@ export default function Course() {
         {studentData.map(value => {
           const labelId = `checkbox-list-secondary-label-${value}`;
           return (
-            <ListItem key={value} button onClick={() => history.push(`/student/${value.id}/`)}>
+            <React.Fragment>
+            <ListItem key={value} button onClick={() => history.push(`/student/${id}/${value.id}`)}>
               <ListItemAvatar>
                 <Avatar
                   alt={`Avatar n°${value + 1}`}
@@ -85,6 +93,8 @@ export default function Course() {
               </ListItemAvatar>
               <ListItemText id={labelId} primary={value.first + " " + value.last} />
             </ListItem>
+            <Divider variant="inset" component="li" />
+             </React.Fragment>
           );
         })}
       </List>
