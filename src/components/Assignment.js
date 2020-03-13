@@ -10,8 +10,9 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-
+import {useLocation} from 'react-router-dom'
+import {coursePosts} from '../common/data'
+import CoursePost from './CoursePost'
 
 
 const useStyles = makeStyles(theme => ({
@@ -44,6 +45,10 @@ export default function Assignment(props) {
     let grade = props.assignment.grade;
 
     // let [imgShown, showImage] = useState(false);
+
+    let location = useLocation();
+
+    console.log(location);
 
     return (
         <div className={classes.root}>
@@ -93,6 +98,22 @@ export default function Assignment(props) {
        
 
             </Card>
+
+            {location.pathname.includes("parent") && 
+            (<React.Fragment> 
+                <Card style={{marginTop: "160px", marginBottom: "10px"}}> 
+                    <CardContent>
+                    <Typography variant="h5">
+                        Recent Posts
+                    </Typography>
+                    </CardContent>
+                </Card>
+                 <CoursePost post={coursePosts[0]}/>      
+                 <CoursePost post={coursePosts[1]}/> 
+                 <CoursePost post={coursePosts[2]}/> 
+                </React.Fragment>)
+            } 
+
 
 
         </div>
