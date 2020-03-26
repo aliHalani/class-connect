@@ -15,9 +15,8 @@ import Copyright from "./Copyright"
 import { createMuiTheme } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import { ThemeProvider } from '@material-ui/core/styles';
-import TestRoute from './TestRoute'
 import { Switch, Route, Link, BrowserRouter as Router } from 'react-router-dom'
-import Routes from "./Routes"
+import AppRoutes from "./AppRoutes"
 
 const theme2 = createMuiTheme({
   palette: {
@@ -91,7 +90,7 @@ export default function App(props) {
       </AppBar>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-      <Routes/>
+      <AppRoutes/>
       </main>
     </div>
     </ThemeProvider>

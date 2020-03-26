@@ -1,16 +1,17 @@
 import React from 'react';
-import TestRoute from './TestRoute'
 import Teacher from './Teacher'
 import { Switch, BrowserRouter as Router, Route} from 'react-router-dom'
 import Course from './Course'
 import Student from './Student'
 import Parent from './Parent'
+import LoginPage from './LoginPage'
 
 
-export default function Routes() {
+export default function AppRoutes() {
     return (
         <Router>
             <Switch>
+                <Route exact path="/" component={LoginPage}/>
                 <Route exact path="/teacher/course/" component={Teacher} />
                 <Route exact path="/parent/" component={Parent} />
                 <Route path="/teacher/course/:courseid" component={Course} />

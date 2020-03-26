@@ -290,4 +290,18 @@ let assignmentData = {
     "id": 2
   }
 }
-export { courseData, coursePosts, studentData, assignmentData }
+
+let userData = {
+  "adamsmith@peelschool.ca" : {
+    "email": "adamsmith@peelschool.ca",
+    "password": "teacher",
+    "type" : "teacher"
+  },
+  "johnwhite@gmail.com" : {
+    "email" : "johnwhite@gmail.com",
+    "password" : "parent",
+    "type" : "parent"
+  }
+}
+
+export { courseData, coursePosts, studentData, assignmentData, userData }
