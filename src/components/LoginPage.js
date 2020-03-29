@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { userData } from '../common/data';
 import { useHistory } from 'react-router-dom';
+import { UserContext } from './context/UserContext'
 
 
 function Copyright() {
@@ -63,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginPage() {
   const classes = useStyles();
   const history = useHistory();
+  const [globalUser, setGlobalUser] = useContext(UserContext);
   const [userDetails, setUser] = React.useState({
     user: "",
     password: ""
@@ -70,13 +72,13 @@ export default function LoginPage() {
 
   function login() {
       const {user, password} = userDetails;
-      console.log(userData.useruser);
-      if ((user in userData) && (userData[user].password == password)) {
-          if (userData[user].type == "teacher") {
-              // route to teacher
-              history.push("/teacher/course");
+      console.log(userData.user);
+      if ((user in userData) && (userData[user].password === password)) {
+          setGlobalUser({first_name: userData[user].first_name,
+                         last_name: userData[user].last_name});
+          if (userData[user].type === "teacher") {
+              history.push("/teacher/course/");
           } else {
-              // route to parent
               history.push("/parent/");
           }
         }

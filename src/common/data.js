@@ -295,12 +295,16 @@ let userData = {
   "adamsmith@peelschool.ca" : {
     "email": "adamsmith@peelschool.ca",
     "password": "teacher",
-    "type" : "teacher"
+    "type" : "teacher",
+    "first_name" : "Adam",
+    "last_name" : "Smith" 
   },
   "johnwhite@gmail.com" : {
     "email" : "johnwhite@gmail.com",
     "password" : "parent",
-    "type" : "parent"
+    "type" : "parent",
+    "first_name" : "John",
+    "last_name" : "White"
   }
 }
 

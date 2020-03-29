@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { useParams } from "react-router-dom";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,8 +10,6 @@ import Drawer from '@material-ui/core/Drawer';
 import CourseHeader from './CourseHeader';
 import { courseData, coursePosts, studentData } from '../common/data.js';
 import CoursePost from './CoursePost'
-import Fab from '@material-ui/core/Fab';
-import EditIcon from '@material-ui/icons/Edit';
 import CreatePost from './CreatePost';
 import {useHistory} from 'react-router-dom'
 import Divider from '@material-ui/core/Divider';
