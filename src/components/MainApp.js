@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,7 @@ import blue from '@material-ui/core/colors/blue';
 import { ThemeProvider } from '@material-ui/core/styles';
 import AppRoutes from "./AppRoutes";
 import { UserContext } from './context/UserContext';
+import { useHistory } from 'react-router-dom';
 
 const theme2 = createMuiTheme({
   palette: {
@@ -67,10 +68,24 @@ export default function MainApp(props) {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [user, setUser] = useContext(UserContext);
+  const history = useHistory();
 
-  console.log(user)
+  useEffect(() => {
+    let userCookie = JSON.parse(localStorage.getItem("user"));
+    if (userCookie && (user.id != userCookie.ID)) {
+      setUser(userCookie);
+    }
+  })
+
+  useEffect(() => {
+    console.log(user)
+    if (user.id == 0) {
+      history.push("/");
+    }
+  }, [user])
 
   return (
+    <React.Fragment>
     <ThemeProvider theme={theme2}>
     <div className={classes.root}>
       <CssBaseline />
@@ -96,5 +111,6 @@ export default function MainApp(props) {
       </main>
     </div>
     </ThemeProvider>
+    </React.Fragment>
   );
 }

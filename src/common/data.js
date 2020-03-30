@@ -293,6 +293,7 @@ let assignmentData = {
 
 let userData = {
   "adamsmith@peelschool.ca" : {
+    "id" : 1,
     "email": "adamsmith@peelschool.ca",
     "password": "teacher",
     "type" : "teacher",
@@ -300,6 +301,7 @@ let userData = {
     "last_name" : "Smith" 
   },
   "johnwhite@gmail.com" : {
+    "id" : 6,
     "email" : "johnwhite@gmail.com",
     "password" : "parent",
     "type" : "parent",

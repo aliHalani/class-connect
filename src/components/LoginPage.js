@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -59,30 +59,45 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  errormsg: {
+    color: "red"
+  }
 }));
 
 export default function LoginPage() {
   const classes = useStyles();
   const history = useHistory();
   const [globalUser, setGlobalUser] = useContext(UserContext);
-  const [userDetails, setUser] = React.useState({
+  const [userDetails, setUser] = useState({
     user: "",
     password: ""
   });
+  const [loginError, setLoginError] = useState(false)
+
+  // useEffect(() => {
+  //   setGlobalUser(localStorage.getItem("user"));
+  // })
 
   function login() {
+      setLoginError(false);
       const {user, password} = userDetails;
-      console.log(userData.user);
+      // console.log(userData.user);
       if ((user in userData) && (userData[user].password === password)) {
-          setGlobalUser({first_name: userData[user].first_name,
-                         last_name: userData[user].last_name});
+          let currentUser = {first_name: userData[user].first_name,
+            last_name: userData[user].last_name,
+            type: userData[user].type};
+          setGlobalUser(currentUser);
+          localStorage.setItem("user", JSON.stringify(currentUser))
+          // console.log(localStorage.getItem("user"))
           if (userData[user].type === "teacher") {
               history.push("/teacher/course/");
           } else {
               history.push("/parent/");
           }
-        }
-    }
+      } else {
+        setLoginError(true);     
+      }
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -136,6 +151,9 @@ export default function LoginPage() {
             >
               Sign In
             </Button>
+            {loginError && <Typography className={classes.errormsg}>
+              Invalid credentials.
+            </Typography>}
             {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
