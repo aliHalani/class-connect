@@ -18,7 +18,9 @@ const useStyles = makeStyles({
     width: 160,
   },
   post: {
-    marginBottom: "20px"
+    marginBottom: "20px",
+    marginLeft: "24px",
+    marginRight: "24px"
   }
 });
 

@@ -4,6 +4,8 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { courseData } from '../common/data'
+import { makeStyles } from '@material-ui/core/styles';
+
 
 function createCourseCards(courseData, rowSize) {
   let coursecards = [];
@@ -17,14 +19,22 @@ function createCourseCards(courseData, rowSize) {
 return coursecards;
 }
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    marginTop: "36px"
+  }
+}));
+
 export default function Teacher() {
+  const classes = useStyles();
+
   const courses = createCourseCards(Object.values(courseData), 3)
     return (
-          <Container maxWidth="lg">
+          <Container className={classes.root} maxWidth="lg">
             {courses}
-            <Box pt={4}>
-            {/* <Copyright /> */}
-          </Box>
+            {/* <Box pt={4}>
+            { <Copyright /> }
+          </Box> */}
         </Container>
     )
 }

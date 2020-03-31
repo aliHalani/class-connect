@@ -23,8 +23,8 @@ const useStyles = makeStyles(theme => ({
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: 'rgba(0,0,0,.3)',
-  },
+    backgroundColor: 'rgba(255,255,255,.3)',
+    backgroundImage: "url(https://img5.goodfon.com/wallpaper/nbig/7/64/abstract-background-rounded-shapes-colorful-abstraktsiia-tek.jpg)"  },
   mainFeaturedPostContent: {
     position: 'relative',
     padding: theme.spacing(3),

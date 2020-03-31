@@ -3,15 +3,20 @@ import React, {useState} from 'react';
 const UserContext = React.createContext([{}, () => {}]);
 
 function UserContextProvider(props) {
+    const initialUserState = {id: 0,
+                              first_name: "Default",
+                              last_name: "Default",
+                              type: ""}
     let userCookie = JSON.parse(localStorage.getItem("user"))
     const [user, setUser] = useState(userCookie ? userCookie : 
-                                        {id: 0,
-                                         first_name: "Default",
-                                         last_name: "Default",
-                                         type: ""});
+                                        initialUserState);
+    function clearUser() {
+        localStorage.clear("user");
+        setUser(initialUserState);
+    }
 
     return (
-        <UserContext.Provider value={[user, setUser]}>
+        <UserContext.Provider value={[user, setUser, clearUser]}>
             {props.children}
         </UserContext.Provider>
     );

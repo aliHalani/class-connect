@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useParams } from "react-router-dom";
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,28 +12,25 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import { useHistory } from 'react-router-dom'
 import { assignmentData, studentData } from '../common/data'
 import Assignment from './Assignment'
-import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
-import Typography from '@material-ui/core/Typography'
+import CreateAssignment from './CreateAssignment';
+import Typography from '@material-ui/core/Typography';
+import { UserContext } from './context/UserContext';
 
-export default function Student(props) {
-  let [assignmentID, setAssignment] = useState(0);
 
-  const drawerWidth = 260;
+
+const drawerWidth = 260;
 
   const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
-      marginLeft: drawerWidth,
-      paddingLeft: "24px",
-      paddingRight: "24px"
+      marginLeft: drawerWidth
     },
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
     },
     drawerPaper: {
-      width: drawerWidth,
-      paddingTop: "72px"
+      width: drawerWidth
     },
     content: {
       flexGrow: 1,
@@ -44,21 +41,39 @@ export default function Student(props) {
       position: 'absolute',
       bottom: theme.spacing(4),
       right: theme.spacing(6),
+    },
+    studentList: {
+      marginTop: "64px",
+      paddingTop: 0,
+      paddingBottom: 0
+    },
+    studentName: {
+      paddingTop: "16px",
+      paddingBottom: "16px"
     }
   }));
 
+
+export default function Student(props) {
   let classes = useStyles();
 
-  let history = useHistory();
-  console.log(Object.keys(assignmentData))
-
+  let [user] = useContext(UserContext);
+  let [activeAssignmentID, setActiveAssignment] = useState(0);
+  let [assignments, setAssignments] = useState(assignmentData);
   let { courseid, studentid } = props.match.params;
+
   let student;
   studentData.map((std) => {
     if (std.id == studentid) {
       student = std;
     }
   });
+
+  function addAssignment(assignment) {
+    let id = new Date().getTime();
+    assignment.id = id;
+    setAssignments((oldAssignments) => ({...oldAssignments, [id]: assignment}));
+  }
 
   return (
     <div className={classes.root}>
@@ -70,27 +85,28 @@ export default function Student(props) {
         }}
         anchor="left"
       >
-        <List dense>
+        <List className={classes.studentList} dense>
           {/* <ListItem key={studentid} button>
             <ListItemText id={studentid} primary={student.first + " " + student.last} />
           </ListItem>
            */}
 
-          <Typography variant="h5" color="inherit" paragraph align="center">
+          <Typography variant="h5" color="inherit" align="center" className={classes.studentName}>
             {student.first + " " + student.last}
           </Typography>
-          {Object.keys(assignmentData).map(value => {
+          <Divider variant="fullWidth" component="li" />
+          {Object.keys(assignments).map(value => {
             const labelId = `checkbox-list-secondary-label-${value}`;
-            const gradeLabel = `${assignmentData[value].grade}%`;
+            const gradeLabel = `${assignments[value].grade}%`;
             return (
               <React.Fragment>
-                <ListItem key={value} button onClick={() => setAssignment(value)}>
+                <ListItem key={value} button onClick={() => setActiveAssignment(value)}>
                   <ListItemAvatar>
                     <Avatar>
                       <FolderIcon />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText id={labelId} primary={assignmentData[value].title} secondary={assignmentData[value].date} />
+                  <ListItemText id={labelId} primary={assignments[value].title} secondary={assignments[value].date} />
                   <ListItemAvatar>
                     <ListItemText id={{ labelId } + '2'} primary={gradeLabel} />
                   </ListItemAvatar>
@@ -101,7 +117,8 @@ export default function Student(props) {
           })}
         </List>
       </Drawer>
-      <Assignment urlparams={props.match.params} assignment={assignmentData[assignmentID]} />
+      <Assignment urlparams={props.match.params} assignment={assignments[activeAssignmentID]} />
+        {user.type === "teacher" && <CreateAssignment updateAssignments={addAssignment}/>}                
     </div>
   )
 }

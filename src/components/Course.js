@@ -20,9 +20,7 @@ const drawerWidth = 260;
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
-      marginLeft: drawerWidth,
-      paddingLeft: "24px",
-      paddingRight: "24px"
+      marginLeft: drawerWidth
     },
     drawer: {
       width: drawerWidth,
@@ -41,7 +39,10 @@ const useStyles = makeStyles(theme => ({
         position: 'absolute',
         bottom: theme.spacing(4),
         right: theme.spacing(6),
-      }
+    },
+    courseHeader: {
+      marginTop: "-36px"
+    }
   }));
 
 
@@ -97,9 +98,9 @@ export default function Course() {
         })}
       </List>
       </Drawer>
-        <CourseHeader post={{title: courseInfo.courseName,
+        <CourseHeader className={classes.courseHeader} post={{title: courseInfo.courseName,
                             description: "This is a sample description for a course",
-                            image: "https://source.unsplash.com/random",
+                            image: "https://images.unsplash.com/photo-1585082971056-a7f2fa6000a3?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max",
                             date: "Jan 17"}}/>
         {postInfo.map((post) => (
             <CoursePost post={post}/>

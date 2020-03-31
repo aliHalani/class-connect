@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,12 +13,12 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import AppRoutes from "./AppRoutes";
 import { UserContext } from './context/UserContext';
 import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import Divider from '@material-ui/core/Divider';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
-const theme2 = createMuiTheme({
-  palette: {
-    primary: blue,
-  },
-});
 
 const useStyles = makeStyles(theme => ({
   palette: {
@@ -27,8 +26,6 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     display: 'flex'
-    // paddingLeft: "24px",
-    // paddingRight: "24px"
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -42,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
   appBarSpacer: {
     ...theme.mixins.toolbar,
-    marginTop: "36px"
+    // marginTop: "36px"
   },
   content: {
     flexGrow: 1,
@@ -66,51 +63,72 @@ const useStyles = makeStyles(theme => ({
 
 export default function MainApp(props) {
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const [user, setUser] = useContext(UserContext);
+  const [user, setUser, clearUser] = useContext(UserContext);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const history = useHistory();
+
+  const isMenuOpen = Boolean(anchorEl);
+
+  useEffect(() => {
+    if (user.id === 0) {
+      history.push("/");
+    }
+  }, [user, history])
 
   useEffect(() => {
     let userCookie = JSON.parse(localStorage.getItem("user"));
-    if (userCookie && (user.id != userCookie.ID)) {
+    if (userCookie && (user.id !== userCookie.ID)) {
       setUser(userCookie);
     }
   })
 
-  useEffect(() => {
-    console.log(user)
-    if (user.id == 0) {
-      history.push("/");
-    }
-  }, [user])
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={clearUser}>Log Out</MenuItem>
+    </Menu>
+  );
 
   return (
     <React.Fragment>
-    <ThemeProvider theme={theme2}>
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="absolute" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Class Connect
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar position="absolute" className={classes.appBar}>
+            <Toolbar className={classes.toolbar}>
+              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                Class Connect
           </Typography>
-          {/* <img src={Logo}/> */}
-          <Typography variant="h6" color="inherit" noWrap>
-            {user.first_name + " " + user.last_name}
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-      <AppRoutes/>
-      </main>
-    </div>
-    </ThemeProvider>
+              {/* <img src={Logo}/> */}
+              <Typography variant="h6" color="inherit" noWrap>
+                {user.first_name + " " + user.last_name}
+              </Typography>
+              {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
+              <IconButton aria-label="display more actions" edge="end" color="inherit" onClick={handleProfileMenuOpen}>
+                <MoreIcon />
+              </IconButton>
+              {/* <Button color="inherit" onClick={clearUser}>Log Out</Button> */}
+            </Toolbar>
+          </AppBar>
+          <main className={classes.content}>
+            <div className={classes.appBarSpacer} />
+            <AppRoutes />
+          </main>
+        </div>
+      {renderMenu}
     </React.Fragment>
   );
 }
