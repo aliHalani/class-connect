@@ -74,29 +74,41 @@ export default function LoginPage() {
   });
   const [loginError, setLoginError] = useState(false)
 
-  // useEffect(() => {
-  //   setGlobalUser(localStorage.getItem("user"));
-  // })
 
   function login() {
       setLoginError(false);
       const {user, password} = userDetails;
-      // console.log(userData.user);
-      if ((user in userData) && (userData[user].password === password)) {
-          let currentUser = {first_name: userData[user].first_name,
-            last_name: userData[user].last_name,
-            type: userData[user].type};
+
+      fetch('http://localhost:5000/authenticate', {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({"email": user,
+                              "password": password})
+      })
+        .then(res => {
+          if (!res.ok) {throw res}
+          return(res.json())})
+        .then((data) => {
+          console.log("success")
+          console.log(data)
+          let currentUser = {first_name : data.first_name,
+                             last_name: data.last_name,
+                             type: data.type,
+                             id: data.user_id}
           setGlobalUser(currentUser);
           localStorage.setItem("user", JSON.stringify(currentUser))
-          // console.log(localStorage.getItem("user"))
           if (userData[user].type === "teacher") {
               history.push("/teacher/course/");
           } else {
               history.push("/parent/");
           }
-      } else {
-        setLoginError(true);     
-      }
+        })
+        .catch((res) => {
+          if (res.status === 401) {
+            setLoginError(true);
+          }
+        })
   }
 
   return (

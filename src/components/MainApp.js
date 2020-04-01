@@ -71,13 +71,16 @@ export default function MainApp(props) {
 
   useEffect(() => {
     if (user.id === 0) {
+      console.log("tttttttttttttt")
       history.push("/");
     }
   }, [user, history])
 
   useEffect(() => {
     let userCookie = JSON.parse(localStorage.getItem("user"));
-    if (userCookie && (user.id !== userCookie.ID)) {
+    if (userCookie && (user.id !== userCookie.id)) {
+      console.log(user.id)
+      console.log(userCookie.ID)
       setUser(userCookie);
     }
   })
