@@ -11,40 +11,44 @@ import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles(theme => ({
-    depositContext: {
-      flex: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      display: 'flex',
-      overflow: 'auto',
-      flexDirection: 'column',
-    }
-  }));
+  depositContext: {
+    flex: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  }
+}));
 
 export default function StudentCard(props) {
-    const classes = useStyles();
-    const history = useHistory();
-    return (
-      <Card>
-        <CardActionArea onClick={() => history.push(`/parent/${props.student.id}/courses/`)}>
-          <CardContent>
-            <Typography component="h2" variant="h6" color="primary" gutterBottom>
-              {props.student.first + " " + props.student.last}
-            </Typography>
-            <Typography component="p" variant="subtitle1">
-              {"Curent average: " + props.student.average}
-            </Typography>
-            {/* <Typography color="textSecondary">
+  const classes = useStyles();
+  const history = useHistory();
+
+  return (
+    <Card>
+      <CardActionArea onClick={() => history.push(`/parent/courses`, {
+        idToFetch: props.student.user_id,
+        student: props.student
+      })}>
+        <CardContent>
+          <Typography component="h2" variant="h6" color="primary" gutterBottom>
+            {props.student.first_name + " " + props.student.last_name}
+          </Typography>
+          <Typography component="p" variant="subtitle1">
+            {"Curent average: " + props.student.average}
+          </Typography>
+          {/* <Typography color="textSecondary">
               {props.subHeading + ": " + props.subHeadingValue}
             </Typography> */}
-          </CardContent>
-          <CardActions>
-            <Button size="small" color="primary">
-              View Student
+        </CardContent>
+        <CardActions>
+          <Button size="small" color="primary">
+            View Student
           </Button>
-          </CardActions>
-        </CardActionArea>
-      </Card>
-    )
+        </CardActions>
+      </CardActionArea>
+    </Card>
+  )
 }

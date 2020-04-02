@@ -49,7 +49,10 @@ export default function CardTemplate(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
+          {/* <Button size="small" color="primary">
+            View Course
+        </Button> */}
+        <Button size="small" color="primary">
             View Course
         </Button>
         </CardActions>

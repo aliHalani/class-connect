@@ -38,7 +38,7 @@ export default function FeaturedPost(props) {
                 {post.title}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {post.date}
+                {post.post_date}
               </Typography>
               <Typography variant="subtitle1" paragraph>
                 {post.content}

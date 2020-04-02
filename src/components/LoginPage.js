@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { userData } from '../common/data';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from './context/UserContext'
 
@@ -74,42 +73,47 @@ export default function LoginPage() {
   });
   const [loginError, setLoginError] = useState(false)
 
-
   function login() {
-      setLoginError(false);
-      const {user, password} = userDetails;
+    setLoginError(false);
+    const { user, password } = userDetails;
 
-      fetch('http://localhost:5000/authenticate', {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({"email": user,
-                              "password": password})
+    fetch('http://localhost:5000/authenticate', {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        "email": user,
+        "password": password
       })
-        .then(res => {
-          if (!res.ok) {throw res}
-          return(res.json())})
-        .then((data) => {
-          console.log("success")
-          console.log(data)
-          let currentUser = {first_name : data.first_name,
-                             last_name: data.last_name,
-                             type: data.type,
-                             id: data.user_id}
-          setGlobalUser(currentUser);
-          localStorage.setItem("user", JSON.stringify(currentUser))
-          if (userData[user].type === "teacher") {
-              history.push("/teacher/course/");
-          } else {
-              history.push("/parent/");
-          }
-        })
-        .catch((res) => {
-          if (res.status === 401) {
-            setLoginError(true);
-          }
-        })
+    })
+      .then(res => {
+        if (!res.ok) { throw res }
+        return (res.json())
+      })
+      .then((data) => {
+        let currentUser = {
+          first_name: data.first_name,
+          last_name: data.last_name,
+          type: data.type,
+          id: data.user_id
+        }
+        setGlobalUser(currentUser);
+        localStorage.setItem("user", JSON.stringify(currentUser))
+      })
+      .catch((res) => {
+        if (res.status === 401) {
+          setLoginError(true);
+        }
+      })
   }
+
+  useEffect(() => {
+    if (globalUser.type === "teacher") {
+      history.push("/teacher/course/", {idToFetch: globalUser.id});
+    } else if (globalUser.type === "parent") {
+      history.push("/parent/");
+    }
+  }, [globalUser])
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -134,7 +138,7 @@ export default function LoginPage() {
               name="email"
               autoComplete="email"
               value={userDetails.user}
-              onChange={(e) => setUser({...userDetails, user: e.target.value})}
+              onChange={(e) => setUser({ ...userDetails, user: e.target.value })}
               autoFocus
             />
             <TextField
@@ -148,7 +152,7 @@ export default function LoginPage() {
               id="password"
               autoComplete="current-password"
               value={userDetails.password}
-              onChange={(e) => setUser({...userDetails, password: e.target.value})}
+              onChange={(e) => setUser({ ...userDetails, password: e.target.value })}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

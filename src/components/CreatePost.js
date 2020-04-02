@@ -32,11 +32,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function DraggableDialog(props) {
   const [open, setOpen] = React.useState(false);
-  const [postDetails, setPost] = React.useState({
+  const initialPost = {
     title: "",
-    date: "2019-03-12",
+    post_date: new Date().toJSON().slice(0,10).replace(/-/g,'-'),
     content: ""
-  })
+  }
+  const [postDetails, setPost] = React.useState(initialPost)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,11 +50,7 @@ export default function DraggableDialog(props) {
   const handlePost = () => {
     setOpen(false);
     props.updatePosts(postDetails);
-    setPost({
-      title: "",
-      date: "2019-03-12",
-      content: ""
-    });
+    setPost(initialPost);
   };
 
   const classes = useStyles();
@@ -89,16 +86,16 @@ export default function DraggableDialog(props) {
           />
           <TextField
             id="date"
-            label="Birthday"
+            label="Date"
             type="date"
             fullWidth
             className={classes.textField}
             InputLabelProps={{
               shrink: true,
             }}
-            value={postDetails.date}
+            value={postDetails.post_date}
             onChange={(e) => setPost({...postDetails,
-                                      date: e.target.value})}
+                                      post_date: e.target.value})}
           />
           <TextField
             id="outlined-multiline-static"

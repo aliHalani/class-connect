@@ -1,20 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import CourseCard from './CourseCard';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import { courseData } from '../common/data'
 import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from './context/UserContext';
+import { useLocation } from 'react-router-dom';
 
-function createCourseCards(courseData, rowSize) {
+function createCourseCards(courseData, student, rowSize) {
   let coursecards = [];
   for (let i = 0, cycles = Math.ceil((courseData.length / rowSize)); i < cycles; i++) {
     let children = [];
     for (let j = i * 3; j < courseData.length & j < ((i * 3) + 3); j++) {
-      children.push(<Grid item xs={12} md={4} lg={4}><CourseCard course={courseData[j]} /></Grid>)
+      children.push(<Grid item xs={12} md={4} lg={4} key={courseData[j].course_id}><CourseCard student={student} course={courseData[j]} /></Grid>)
     }
-  coursecards.push(<Grid container spacing={rowSize}>{children}</Grid>)
+  coursecards.push(<Grid container key={i} spacing={rowSize}>{children}</Grid>)
 }
 return coursecards;
 }
@@ -25,48 +25,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function retrieveCourses(id) {
-  fetch(`http://localhost:5000/courses?id=${id}`)
+export default function Teacher() {
+  const classes = useStyles();
+  const [user, setUser, clearUser] = useContext(UserContext);
+  const [courses, setCourses] = useState([])
+  const {idToFetch, student = null} = useLocation().state;
+
+  console.log(student)
+  
+  useEffect(() => {
+    fetch(`http://localhost:5000/courses/${idToFetch}?type=${user.type}`)
         .then(res => {
           if (!res.ok) {throw res}
           return(res.json())})
         .then((data) => {
-          console.log("success")
-          console.log(data)
-          // let currentUser = {first_name : data.first_name,
-          //                    last_name: data.last_name,
-          //                    type: data.type,
-          //                    id: data.id}
-          // setGlobalUser(currentUser);
-          // localStorage.setItem("user", JSON.stringify(currentUser))
-          // if (userData[user].type === "teacher") {
-          //     history.push("/teacher/course/");
-          // } else {
-          //     history.push("/parent/");
-          // }
+          setCourses(data.courses)
         })
         .catch((res) => {
-          // if (res.status === 401) {
-          //   setLoginError(true);
-          // }
-          console.log("ERROR")
+          console.log("ERROR - retrieving courses")
         })
-}
-
-export default function Teacher() {
-  const classes = useStyles();
-  const [user, setUser, clearUser] = useContext(UserContext);
-  console.log(user);
-
-  // const courses = createCourseCards(Object.values(courseData), 3)
-  const courses = retrieveCourses(user.id)
+  }, [])
 
     return (
           <Container className={classes.root} maxWidth="lg">
-            {courses}
-            {/* <Box pt={4}>
-            { <Copyright /> }
-          </Box> */}
+            {createCourseCards(courses, student, 3)}
         </Container>
     )
 }

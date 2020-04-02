@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
+import { UserContext } from './context/UserContext'
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   mainFeaturedPost: {
@@ -12,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: 'url(https://images.unsplash.com/photo-1583847149140-762c8dd209b6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max)',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -31,18 +34,21 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(6),
       paddingRight: 0,
-    },
+    }
   },
+  viewResults: {
+    marginTop: "10px"
+  }
 }));
 
 export default function MainFeaturedPost(props) {
   const classes = useStyles();
-  const { post } = props;
+  const { post, posts, student, course } = props;
+  const [user] = useContext(UserContext);
+  const history = useHistory();
 
   return (
-    <Paper className={classes.mainFeaturedPost} style={{ backgroundImage: `url(${post.image})` }}>
-      {/* Increase the priority of the hero background image */}
-      {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />}
+    <Paper className={classes.mainFeaturedPost}>
       <div className={classes.overlay} />
       <Grid container>
         <Grid item md={6}>
@@ -53,9 +59,13 @@ export default function MainFeaturedPost(props) {
             <Typography variant="h5" color="inherit" paragraph>
               {post.description}
             </Typography>
-            <Link variant="subtitle1" href="#">
-              {post.linkText}
-            </Link>
+            {user.type === "parent" && student !== null && <Button onClick={() => history.push(`/assignments`, {
+              course: course,
+              student: student,
+              posts: posts
+            })} className={classes.viewResults} variant="contained" color="primary">
+              View {student.first_name}'s results
+            </Button>}
           </div>
         </Grid>
       </Grid>

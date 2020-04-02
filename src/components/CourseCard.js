@@ -3,13 +3,15 @@ import CardTemplate from './CardTemplate'
 
 export default function CourseCard(props) {
     return (
-        <CardTemplate title={props.course.courseName}
+        <CardTemplate title={props.course.name}
               mainHeading="Number of Students"
-              mainValue={props.course.numOfStudents}
+              mainValue={props.course.size}
               subHeading="Course average"
-              subHeadingValue={props.course.classAverage}
+              subHeadingValue={props.course.class_average}
               linkText = "View course"
-              linkValue={`${props.course.id}`}
+              linkValue={{pathname: "/course",
+                          state: {course : props.course,
+                                  student: props.student}}}
         />
     )
 }

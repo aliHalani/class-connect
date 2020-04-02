@@ -14,9 +14,9 @@ export default function AppRoutes() {
                 <Route exact path="/" component={LoginPage}/>
                 <Route exact path="/teacher/course/" component={Teacher} />
                 <Route exact path="/parent/" component={Parent} />
-                <Route path="/teacher/course/:courseid" component={Course} />
-                <Route path="/student/:courseid/:studentid/" component={Student}/>
-                <Route exact path="/parent/:studentid/courses" component={Teacher}/>
+                <Route path="/course" component={Course} />
+                <Route path="/assignments" component={Student}/>
+                <Route exact path="/parent/courses" component={Teacher}/>
                 <Route path="/parent/:studentid/courses/:courseid" component={Student}/>
             </Switch>
         </Router>

@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    width: "230px"
   },
   appBarSpacer: {
     ...theme.mixins.toolbar,
@@ -71,7 +72,6 @@ export default function MainApp(props) {
 
   useEffect(() => {
     if (user.id === 0) {
-      console.log("tttttttttttttt")
       history.push("/");
     }
   }, [user, history])
@@ -108,29 +108,30 @@ export default function MainApp(props) {
 
   return (
     <React.Fragment>
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar position="absolute" className={classes.appBar}>
-            <Toolbar className={classes.toolbar}>
-              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                Class Connect
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar position="absolute" className={classes.appBar}>
+          <Toolbar className={classes.toolbar}>
+            <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+            <img src="/images/classconnect.svg" className={classes.title}/>
           </Typography>
-              {/* <img src={Logo}/> */}
-              <Typography variant="h6" color="inherit" noWrap>
-                {user.first_name + " " + user.last_name}
-              </Typography>
-              {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
-              <IconButton aria-label="display more actions" edge="end" color="inherit" onClick={handleProfileMenuOpen}>
-                <MoreIcon />
-              </IconButton>
-              {/* <Button color="inherit" onClick={clearUser}>Log Out</Button> */}
-            </Toolbar>
-          </AppBar>
-          <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
-            <AppRoutes />
-          </main>
-        </div>
+     
+            {/* <img src={Logo}/> */}
+            <Typography variant="h6" color="inherit" noWrap>
+              {user.first_name + " " + user.last_name}
+            </Typography>
+            {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
+            <IconButton aria-label="display more actions" edge="end" color="inherit" onClick={handleProfileMenuOpen}>
+              <MoreIcon />
+            </IconButton>
+            {/* <Button color="inherit" onClick={clearUser}>Log Out</Button> */}
+          </Toolbar>
+        </AppBar>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <AppRoutes />
+        </main>
+      </div>
       {renderMenu}
     </React.Fragment>
   );

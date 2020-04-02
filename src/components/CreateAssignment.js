@@ -35,9 +35,9 @@ export default function DraggableDialog(props) {
     const initialAssignment = {
         title: "",
         grade: "",
-        date: new Date().toJSON().slice(0,10).replace(/-/g,'-'),
+        assignment_date: new Date().toJSON().slice(0,10).replace(/-/g,'-'),
         comments: "",
-        attachments: []
+        attachment_path: ""
     };
 
     const [assignmentDetails, setAssignment] = React.useState(initialAssignment);
@@ -52,8 +52,7 @@ export default function DraggableDialog(props) {
 
     const handleAssignment = () => {
         setOpen(false);
-        console.log(assignmentDetails)
-        props.updateAssignments(assignmentDetails);
+        props.updateAssignments({...assignmentDetails, date: new Date(assignmentDetails.date).toDateString()});
         setAssignment(initialAssignment);
     };
 
@@ -108,17 +107,17 @@ export default function DraggableDialog(props) {
                     />
                     <TextField
                         id="date"
-                        label="date"
+                        label="Date"
                         type="date"
                         fullWidth
                         className={classes.textField}
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        value={assignmentDetails.date}
+                        value={assignmentDetails.assignment_date}
                         onChange={(e) => setAssignment({
                             ...assignmentDetails,
-                            date: e.target.value
+                            assignment_date: e.target.value
                         })}
                     />
                     <TextField

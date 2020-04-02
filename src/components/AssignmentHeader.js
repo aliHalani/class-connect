@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     right: 0,
     left: 0,
     backgroundColor: 'rgba(255,255,255,.3)',
-    backgroundImage: "url(https://img5.goodfon.com/wallpaper/nbig/7/64/abstract-background-rounded-shapes-colorful-abstraktsiia-tek.jpg)"  },
+    backgroundImage: "url(https://thebossmagazine.com/wp-content/uploads/2019/08/iStock-1093713604.jpg)"  },
   mainFeaturedPostContent: {
     position: 'relative',
     padding: theme.spacing(3),
@@ -63,6 +63,9 @@ export default function MainFeaturedPost(props) {
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
               {`Grade: ${props.assignment.grade}%`}
+            </Typography>
+            <Typography variant="h5" color="inherit" paragraph>
+              {new Date(props.assignment.assignment_date).toDateString()}
             </Typography>
             {/* <Link variant="subtitle1" href="#">
               {post.linkText}

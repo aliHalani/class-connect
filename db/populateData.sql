@@ -44,10 +44,10 @@ INSERT INTO users (user_id, email, password, type, first_name, last_name, averag
 
 INSERT INTO courses (course_id, teacher_id, name, size, class_average, description) VALUES
   (1, 1, "Advanced Business Analytics", 31, 62.0, "Gain practical skills in extracting and manipulating data using SQL code, executing statistical methods for descriptive, predictive, and prescriptive analysis, and effectively interpreting and presenting analytic results."),
-  (2, 1, "General Life 101", 28, 83.0, "This is a sample description for a course"),
-  (3, 1, "Intro to Architecture", 27, 81.0, "This is a sample description for a course"),
+  (2, 1, "General Life 101", 28, 83.0, "An introduction to the real life."),
+  (3, 1, "Intro to Architecture", 27, 81.0, "Learn how to design!"),
   (4, 1, "Intro to Computer Science", 32, 76.0, "Become fluent in several programming languages and learn about data structures, algorithms, machine learning, data science, networks, and operating systems."),
-  (5, 1, "Technical Design", 30, 79.0, "This is a sample description for a course");
+  (5, 1, "Technical Design", 30, 79.0, "Put your techincal skills to work to design real structures.");
 
 INSERT INTO parent_student_relations (parent_id, student_id) VALUES
   (2, 3), (2, 4), (2, 5); # John White's kids

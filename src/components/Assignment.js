@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { courseData, assignmentData } from '../common/data';
 import AssignmentHeader from './AssignmentHeader';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,9 +9,8 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { useLocation } from 'react-router-dom'
-import { coursePosts } from '../common/data'
 import CoursePost from './CoursePost'
+import { UserContext } from './context/UserContext'
 
 
 const useStyles = makeStyles(theme => ({
@@ -37,23 +35,22 @@ const useStyles = makeStyles(theme => ({
 
 export default function Assignment(props) {
     const classes = useStyles();
-    let { courseid, studentid } = props.urlparams;
     let grade = props.assignment.grade;
+    const [user] = useContext(UserContext);
+    const posts = props.posts;
 
     // let [imgShown, showImage] = useState(false);
 
-    let location = useLocation();
-
-    console.log(location);
+    console.log(posts)
 
     return (
         <div className={classes.root}>
-            <AssignmentHeader coursetitle={courseData[courseid].courseName} courseid={courseid}
+            <AssignmentHeader coursetitle={props.course.name} courseid={props.course.course_id}
                 assignment={props.assignment} />
 
             <div className={classes.content}>
                 <Card>
-                    {props.assignment.attachments.length > 0 &&
+                    {props.assignment.attachment_path &&
                         <ExpansionPanel className={classes.expansion}>
                             <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon />}
@@ -64,7 +61,7 @@ export default function Assignment(props) {
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <CardContent >
-                                    <img src={"/images/" + props.assignment.attachments[0].filename} />
+                                    <img src={props.assignment.attachment_path} />
                                 </CardContent>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
@@ -95,8 +92,8 @@ export default function Assignment(props) {
 
 
                 </Card>
-
-                {location.pathname.includes("parent") &&
+{/* 
+                {user.type === "parent" &&
                     (<React.Fragment>
                         <Card style={{ marginTop: "160px", marginBottom: "10px" }}>
                             <CardContent>
@@ -105,11 +102,11 @@ export default function Assignment(props) {
                     </Typography>
                             </CardContent>
                         </Card>
-                        <CoursePost post={coursePosts[0]} />
-                        <CoursePost post={coursePosts[1]} />
-                        <CoursePost post={coursePosts[2]} />
+                        {posts.slice[0,3].map((post) => (
+                            <CoursePost post={post}/>
+                        ))}
                     </React.Fragment>)
-                }
+                } */}
 
             </div>
 
