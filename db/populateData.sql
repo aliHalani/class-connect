@@ -1,3 +1,5 @@
+-- authored by https://github.com/zaheenchoudhry
+
 USE classconnect;
 
 INSERT INTO users (user_id, email, password, type, first_name, last_name, average) VALUES

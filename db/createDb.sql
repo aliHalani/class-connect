@@ -1,4 +1,4 @@
-CREATE DATABASE classconnect;
+-- authored by https://github.com/zaheenchoudhry
 
 USE classconnect;
 

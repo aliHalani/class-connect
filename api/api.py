@@ -7,12 +7,8 @@ from sqlalchemy import create_engine, MetaData, Table
 import configparser
 from flask_cors import CORS
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-DB = config['Database']
-
 conxn_string = ('mysql+mysqlconnector://{user}:{pswd}@{host}:{port}/{db}'.format(
-	user=DB['User'], pswd=DB['Password'], host=DB['Host'], port=DB['Port'], db=DB['DBName']))
+	user="root", pswd="pass", host="db", port="3306", db="classconnect"))
 
 engine = create_engine(conxn_string, convert_unicode=True)
 metadata = MetaData(bind=engine)
@@ -235,4 +231,4 @@ def create_record():
 # 	return schools
 
 
-app.run()
+app.run(host="0.0.0.0", port=5000)
