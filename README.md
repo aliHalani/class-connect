@@ -7,7 +7,9 @@ The front-end is built with React, which retrieves data from an API served by Fl
 
 ## Demo
 
-View the full demo here: https://vimeo.com/414123886
+View the full demo here: https://vimeo.com/414123886.
+
+![Class Connect Demo](docs/demo.gif)
 
 
 ## How to Run
