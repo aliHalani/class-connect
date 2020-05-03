@@ -16,6 +16,8 @@ View the full demo here: https://vimeo.com/414123886.
 
 To run the platform, simply clone the repo, navigate into the directory, and run `docker-compose up` (of course, you must have docker installed!).
 
+Navigate to localhost:3000 to see the platform in action.
+
 
 ## Notes
 
@@ -23,4 +25,4 @@ Flask API developed by @murizvi (https://github.com/murizvi).
 
 Database scripts written by @zaheenchoudhry (https://github.com/zaheenchoudhry).
 
-Developed and tested on Windows.
+Developed and tested on Windows 10 & Ubuntu 20.04.
